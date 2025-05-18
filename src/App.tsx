@@ -1,12 +1,12 @@
+import { MainePage } from "./pages";
+import { MantineProvider } from "@mantine/core";
 
 function App() {
-    const x = process.env.BRIGDE_API
-    console.log(x)
   return (
-    <>
-      Стартdsd
-    </>
-  )
+    <MantineProvider>
+      <MainePage />
+    </MantineProvider>
+  );
 }
 
-export default App
+export default App;
