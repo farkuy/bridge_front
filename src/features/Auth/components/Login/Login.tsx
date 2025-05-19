@@ -1,32 +1,31 @@
-import { Button, CloseButton, Input } from "@mantine/core";
+import { Button, Input, Stack } from "@mantine/core";
 import { useLoginSubmit } from "./hooks/useLoginSubmit";
+import { loginConfig } from "./consts/config";
 
 export const Login = () => {
-  const { register, reset, errors, handleSubmit, onSubmit } = useLoginSubmit();
+  const { register, errors, handleSubmit, onSubmit } = useLoginSubmit();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        placeholder="Введите логин"
-        id={"email"}
-        {...register("email")}
-        mt="md"
-        rightSection={
-          <CloseButton aria-label="Clear input" onClick={() => reset()} />
-        }
-        error={errors.email?.message}
-      />
-      <Input
-        placeholder="Введите пароль"
-        id={"password"}
-        {...register("password")}
-        mt="md"
-        rightSection={
-          <CloseButton aria-label="Clear input" onClick={() => reset()} />
-        }
-        error={errors.password?.message}
-      />
-      <Button>Войти</Button>
+      <Stack>
+        {loginConfig.map(
+          ({ value, component: Component, label, placeholder }) => (
+            <Input.Wrapper
+              label={label}
+              key={value}
+              error={errors[value]?.message}
+            >
+              <Component
+                placeholder={placeholder}
+                type={value}
+                {...register(value)}
+                mt="md"
+              />
+            </Input.Wrapper>
+          ),
+        )}
+        <Button type={"submit"}>Войти</Button>
+      </Stack>
     </form>
   );
 };

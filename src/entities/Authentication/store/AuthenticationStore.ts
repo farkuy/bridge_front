@@ -10,8 +10,8 @@ export const $authStore = createStore<AuthenticationStore>({
   accessToken: "",
 });
 
-const setRefreshToken = createEvent<string>();
-const setAccessToken = createEvent<string>();
+export const setRefreshToken = createEvent<string>();
+export const setAccessToken = createEvent<string>();
 
 $authStore.on(setRefreshToken, (_, refreshToken) => ({ ..._, refreshToken }));
 $authStore.on(setAccessToken, (_, accessToken) => ({ ..._, accessToken }));

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { $authStore } from "../../entities/Authentication/store/AuthenticationStore";
+import { $authStore } from "../../entities";
 
 export const $axios = axios.create({
   baseURL: process.env.BRIGDE_API,

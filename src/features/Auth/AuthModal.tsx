@@ -12,7 +12,7 @@ export const AuthModal = (props: AuthModalProps) => {
     <Modal
       opened={visible}
       onClose={onClose}
-      title="Authentication"
+      title="Авторизация"
       centered
       size={"md"}
     >
