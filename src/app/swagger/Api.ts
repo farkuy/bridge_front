@@ -10,7 +10,18 @@
  * ---------------------------------------------------------------
  */
 
-export type CreateUserDto = object;
+export interface CreateUserDto {
+  /**
+   * Email пользователя, используемый для входа
+   * @example "user@example.com"
+   */
+  email: string;
+  /**
+   * Пароль пользователя (рекомендуется минимум 8 символов)
+   * @example "strongPassword123"
+   */
+  password: string;
+}
 
 export interface User {
   /**
@@ -40,9 +51,31 @@ export interface User {
   banReason?: string;
 }
 
-export type AddRoleDto = object;
+export interface AddRoleDto {
+  /**
+   * ID пользователя, которому добавляется роль
+   * @example 42
+   */
+  userId: number;
+  /**
+   * Значение роли, которую нужно добавить
+   * @example "ADMIN"
+   */
+  value: string;
+}
 
-export type CreateRoleDto = object;
+export interface CreateRoleDto {
+  /**
+   * Уникальное значение роли, например: ADMIN, USER
+   * @example "ADMIN"
+   */
+  value: string;
+  /**
+   * Описание роли
+   * @example "Администратор с полными правами"
+   */
+  description: string;
+}
 
 export interface Role {
   /**
@@ -246,20 +279,20 @@ export class HttpClient<SecurityDataType = unknown> {
 export class Api<
   SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
-  users = {
+  api = {
     /**
      * No description
      *
      * @tags Users
      * @name UsersControllerCreateUser
-     * @request POST:/users
+     * @request POST:/api/users
      */
     usersControllerCreateUser: (
       data: CreateUserDto,
       params: RequestParams = {},
     ) =>
       this.request<User, any>({
-        path: `/users`,
+        path: `/api/users`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -272,11 +305,11 @@ export class Api<
      *
      * @tags Users
      * @name UsersControllerGetAllUsers
-     * @request GET:/users/all
+     * @request GET:/api/users/all
      */
     usersControllerGetAllUsers: (params: RequestParams = {}) =>
       this.request<User[], any>({
-        path: `/users/all`,
+        path: `/api/users/all`,
         method: "GET",
         format: "json",
         ...params,
@@ -287,11 +320,11 @@ export class Api<
      *
      * @tags Users
      * @name UsersControllerGetUserById
-     * @request GET:/users/{id}
+     * @request GET:/api/users/{id}
      */
     usersControllerGetUserById: (id: number, params: RequestParams = {}) =>
       this.request<User, any>({
-        path: `/users/${id}`,
+        path: `/api/users/${id}`,
         method: "GET",
         format: "json",
         ...params,
@@ -302,32 +335,31 @@ export class Api<
      *
      * @tags Users
      * @name UsersControllerAddRole
-     * @request POST:/users/addRole
+     * @request POST:/api/users/addRole
      */
     usersControllerAddRole: (data: AddRoleDto, params: RequestParams = {}) =>
       this.request<User, any>({
-        path: `/users/addRole`,
+        path: `/api/users/addRole`,
         method: "POST",
         body: data,
         type: ContentType.Json,
         format: "json",
         ...params,
       }),
-  };
-  roles = {
+
     /**
      * No description
      *
      * @tags Roles
      * @name RolesControllerCreateRole
-     * @request POST:/roles/create
+     * @request POST:/api/roles/create
      */
     rolesControllerCreateRole: (
       data: CreateRoleDto,
       params: RequestParams = {},
     ) =>
       this.request<Role, any>({
-        path: `/roles/create`,
+        path: `/api/roles/create`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -340,33 +372,32 @@ export class Api<
      *
      * @tags Roles
      * @name RolesControllerGetRoleByValue
-     * @request GET:/roles/{value}
+     * @request GET:/api/roles/{value}
      */
     rolesControllerGetRoleByValue: (
       value: string,
       params: RequestParams = {},
     ) =>
       this.request<Role, any>({
-        path: `/roles/${value}`,
+        path: `/api/roles/${value}`,
         method: "GET",
         format: "json",
         ...params,
       }),
-  };
-  auth = {
+
     /**
      * No description
      *
      * @tags Auth
      * @name AuthControllerRegistration
-     * @request POST:/auth/registration
+     * @request POST:/api/auth/registration
      */
     authControllerRegistration: (
       data: CreateUserDto,
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/auth/registration`,
+        path: `/api/auth/registration`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -378,11 +409,11 @@ export class Api<
      *
      * @tags Auth
      * @name AuthControllerLogin
-     * @request POST:/auth/login
+     * @request POST:/api/auth/login
      */
     authControllerLogin: (data: CreateUserDto, params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/auth/login`,
+        path: `/api/auth/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "gen_api": "npx swagger-typescript-api generate -p http://localhost:5000/api-json -o src/app/swagger --axios",
+    "gen_api": "npx swagger-typescript-api generate -p http://localhost:5000/api-json -o src/app/swagger --axios --group",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
