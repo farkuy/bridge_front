@@ -95,6 +95,26 @@ export interface Role {
   description: string;
 }
 
+export interface UserResponseDto {
+  /**
+   * Уникальный идентификатор пользователя
+   * @example 1
+   */
+  id: number;
+  /**
+   * Email пользователя
+   * @example "user@example.com"
+   */
+  email: string;
+  /** Список ролей пользователя */
+  roles: Role[];
+  /**
+   * Токен доступа для авторизации пользователя
+   * @example "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+   */
+  accessToken: string;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -412,11 +432,12 @@ export class Api<
      * @request POST:/api/auth/login
      */
     authControllerLogin: (data: CreateUserDto, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<UserResponseDto, any>({
         path: `/api/auth/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
   };

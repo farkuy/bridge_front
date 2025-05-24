@@ -5,7 +5,9 @@ import { loginSchema } from "../schema/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUnit } from "effector-react";
 import { setAccessToken } from "../../../../../entities/Authentication/store/AuthenticationStore";
-import { Api } from "../../../../../app/swagger/Api";
+import { request } from "../../../../../shared/api/InstanceAxiosApi";
+
+const QUERY_KEY = "authControllerLogin";
 
 export const useLoginSubmit = () => {
   const [changeAccessToken] = useUnit([setAccessToken]);
@@ -20,9 +22,8 @@ export const useLoginSubmit = () => {
   });
 
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
-    const user = await Api.auth.authControllerLogin(data);
-    changeAccessToken(user.data.accessToken);
-    return user;
+    const user = await request(QUERY_KEY)(data);
+    console.log(user.data);
   };
 
   return {
