@@ -3,7 +3,8 @@ import { registrationConfig } from "./consts/config";
 import { useRegistrationSubmit } from "./hooks/useRegistrationSubmit";
 
 export const Registration = () => {
-  const { register, errors, handleSubmit, onSubmit } = useRegistrationSubmit();
+  const { register, errors, handleSubmit, onSubmit, isLoading } =
+    useRegistrationSubmit();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -24,7 +25,9 @@ export const Registration = () => {
             </Input.Wrapper>
           ),
         )}
-        <Button type={"submit"}>Войти</Button>
+        <Button type={"submit"} loading={isLoading}>
+          Войти
+        </Button>
       </Stack>
     </form>
   );

@@ -416,11 +416,12 @@ export class Api<
       data: CreateUserDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<UserResponseDto, any>({
         path: `/api/auth/registration`,
         method: "POST",
         body: data,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 

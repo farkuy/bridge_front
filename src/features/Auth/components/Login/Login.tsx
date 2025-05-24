@@ -3,7 +3,8 @@ import { useLoginSubmit } from "./hooks/useLoginSubmit";
 import { loginConfig } from "./consts/config";
 
 export const Login = () => {
-  const { register, errors, handleSubmit, onSubmit } = useLoginSubmit();
+  const { register, errors, handleSubmit, onSubmit, isLoading } =
+    useLoginSubmit();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -24,7 +25,9 @@ export const Login = () => {
             </Input.Wrapper>
           ),
         )}
-        <Button type={"submit"}>Войти</Button>
+        <Button type={"submit"} loading={isLoading}>
+          Войти
+        </Button>
       </Stack>
     </form>
   );

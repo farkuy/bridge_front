@@ -6,7 +6,9 @@ interface SwitchFormProps {
   onChange: (form: AuthForm) => void;
 }
 
-export const SwitchForm = ({ selected, onChange }: SwitchFormProps) => {
+export const SwitchForm = (props: SwitchFormProps) => {
+  const { selected, onChange } = props;
+
   return (
     <Flex justify="center">
       <NavLink

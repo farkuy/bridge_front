@@ -5,9 +5,14 @@ import { useUnit } from "effector-react";
 import { setAccessToken } from "../../../../../entities/Authentication/store/AuthenticationStore";
 import type { RegistrationSchema } from "../schema/registration";
 import { registrationSchema } from "../schema/registration";
+import { apiV1request } from "../../../../../shared/api/InstanceAxiosApi";
+import { useState } from "react";
+
+const QUERY_KEY = "authControllerRegistration";
 
 export const useRegistrationSubmit = () => {
   const [changeAccessToken] = useUnit([setAccessToken]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -19,7 +24,15 @@ export const useRegistrationSubmit = () => {
   });
 
   const onSubmit: SubmitHandler<RegistrationSchema> = async (data) => {
-    return data;
+    setIsLoading(true);
+    try {
+      const { data: userData } = await apiV1request(QUERY_KEY)(data);
+      changeAccessToken(userData.accessToken);
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return {
@@ -28,5 +41,6 @@ export const useRegistrationSubmit = () => {
     errors,
     handleSubmit,
     onSubmit,
+    isLoading,
   };
 };

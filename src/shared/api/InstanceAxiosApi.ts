@@ -1,6 +1,6 @@
 import { $authStore } from "../../entities";
 import { Api } from "../../app/swagger/Api";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 
 export const ApiV1 = new Api();
 
@@ -17,17 +17,15 @@ ApiV1.instance.interceptors.request.use((config) => {
   return config;
 });
 
-export type ApiV1Keys = keyof typeof ApiV1.api;
-
-export function apiV1request<K extends ApiV1Keys>(key: K) {
-  const method = ApiV1.api[key];
-  type MethodTypes = Parameters<typeof method>;
-
-  return (...args: MethodTypes) => {
-    try {
-      return method(...args);
-    } catch (error) {
-      console.log(error);
+export function apiV1request<K extends keyof typeof ApiV1.api>(key: K) {
+  try {
+    return ApiV1.api[key];
+  } catch (error) {
+    if (isAxiosError(error)) {
+      console.error("Что-то пошло не так");
     }
-  };
+
+    //Добавить обновление токена при его протухании и перевызов реквеста
+    throw error;
+  }
 }

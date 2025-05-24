@@ -5,12 +5,14 @@ import { loginSchema } from "../schema/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUnit } from "effector-react";
 import { setAccessToken } from "../../../../../entities/Authentication/store/AuthenticationStore";
-import { request } from "../../../../../shared/api/InstanceAxiosApi";
+import { apiV1request } from "../../../../../shared/api/InstanceAxiosApi";
+import { useState } from "react";
 
 const QUERY_KEY = "authControllerLogin";
 
 export const useLoginSubmit = () => {
   const [changeAccessToken] = useUnit([setAccessToken]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -22,8 +24,15 @@ export const useLoginSubmit = () => {
   });
 
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
-    const user = await request(QUERY_KEY)(data);
-    console.log(user.data);
+    setIsLoading(true);
+    try {
+      const { data: userData } = await apiV1request(QUERY_KEY)(data);
+      changeAccessToken(userData.accessToken);
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return {
@@ -32,5 +41,6 @@ export const useLoginSubmit = () => {
     errors,
     handleSubmit,
     onSubmit,
+    isLoading,
   };
 };
