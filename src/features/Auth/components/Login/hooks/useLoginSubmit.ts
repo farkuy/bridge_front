@@ -4,14 +4,19 @@ import type { LoginSchema } from "../schema/login";
 import { loginSchema } from "../schema/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUnit } from "effector-react";
-import { setAccessToken } from "../../../../../entities/Authentication/store/AuthenticationStore";
-import { apiV1request } from "../../../../../shared/api/InstanceAxiosApi";
+import { setAccessToken, setIsShowAuth } from "@/entities/Authentication";
+import { apiV1request } from "@/shared/api/InstanceAxiosApi";
 import { useState } from "react";
+import { setUser } from "@/entities/User/store/UserStore";
 
 const QUERY_KEY = "authControllerLogin";
 
 export const useLoginSubmit = () => {
-  const [changeAccessToken] = useUnit([setAccessToken]);
+  const [changeAccessToken, setUserInfo, setVisibleAuth] = useUnit([
+    setAccessToken,
+    setUser,
+    setIsShowAuth,
+  ]);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -26,8 +31,14 @@ export const useLoginSubmit = () => {
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
     setIsLoading(true);
     try {
-      const { data: userData } = await apiV1request(QUERY_KEY)(data);
-      changeAccessToken(userData.accessToken);
+      const {
+        data: { accessToken, ...other },
+      } = await apiV1request(QUERY_KEY)(data);
+
+      changeAccessToken(accessToken);
+      setUserInfo(other);
+
+      setVisibleAuth(false);
     } catch (error) {
       throw error;
     } finally {

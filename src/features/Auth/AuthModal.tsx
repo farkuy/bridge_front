@@ -4,14 +4,11 @@ import { Registration } from "./components/Registration/Registration";
 import { SwitchForm } from "./components/SwitchForm/SwitchForm";
 import { useState } from "react";
 import type { AuthForm } from "./types/form";
+import { useUnit } from "effector-react/compat";
+import { $isShowAuth, setIsShowAuth } from "@/entities/Authentication";
 
-interface AuthModalProps {
-  visible: boolean;
-  onClose: () => void;
-}
-
-export const AuthModal = (props: AuthModalProps) => {
-  const { visible, onClose } = props;
+export const AuthModal = () => {
+  const [visible, setVisible] = useUnit([$isShowAuth, setIsShowAuth]);
   const [selectableForm, setSelectableForm] = useState<AuthForm>("login");
 
   const form = selectableForm === "login" ? <Login /> : <Registration />;
@@ -19,7 +16,7 @@ export const AuthModal = (props: AuthModalProps) => {
   return (
     <Modal
       opened={visible}
-      onClose={onClose}
+      onClose={() => setVisible(false)}
       title="Авторизация"
       centered
       size={"md"}

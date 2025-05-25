@@ -1,6 +1,6 @@
-import { $authStore } from "../../entities";
-import { Api } from "../../app/swagger/Api";
+import { Api } from "@/app/swagger/Api";
 import axios, { isAxiosError } from "axios";
+import { $authStore } from "@/entities/Authentication";
 
 export const ApiV1 = new Api();
 

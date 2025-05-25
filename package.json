@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^5.0.1",
     "@mantine/core": "^8.0.1",
     "@mantine/hooks": "^8.0.1",
+    "@tabler/icons-react": "^3.33.0",
     "axios": "^1.9.0",
     "effector": "^23.3.0",
     "effector-react": "^23.3.0",
