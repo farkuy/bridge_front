@@ -8,16 +8,26 @@ import {
 } from "@mantine/core";
 import { links } from "./consts/links";
 import { useUnit } from "effector-react/compat";
-import { setIsShowAuth } from "@/entities/Authentication";
-import { AuthModal } from "@/features/Auth/AuthModal";
-import { $user } from "@/entities/User";
+import { setAccessToken, setIsShowAuth } from "@/entities/Authentication";
+import { AuthModal } from "@/features/Auth";
+import { $user, setUser } from "@/entities/User";
 
 export const NavBar = () => {
   const theme = useMantineTheme();
-  const [user, setVisible] = useUnit([$user, setIsShowAuth]);
+  const [user, setVisible] = useUnit([
+    $user,
+    setIsShowAuth,
+    setUser,
+    setAccessToken,
+  ]);
 
   const onShowAuth = () => {
     setVisible(true);
+  };
+
+  const onExit = () => {
+    setUser(null);
+    setAccessToken("");
   };
 
   return (
@@ -39,7 +49,13 @@ export const NavBar = () => {
               {link.label}
             </Anchor>
           ))}
-          {!user.email && <Button onClick={onShowAuth}>Войти</Button>}
+          {!user?.email ? (
+            <Button onClick={onShowAuth}>Войти</Button>
+          ) : (
+            <Button color={"red"} variant={"outline"} onClick={onExit}>
+              Выйти
+            </Button>
+          )}
           <AuthModal />
         </Group>
       </Group>

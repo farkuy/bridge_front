@@ -9,6 +9,7 @@ ApiV1.instance = axios.create({
   maxBodyLength: Infinity,
   timeout: 100000,
   headers: { "Content-Type": "application/json", Accept: "application/json" },
+  withCredentials: true,
 });
 
 ApiV1.instance.interceptors.request.use((config) => {

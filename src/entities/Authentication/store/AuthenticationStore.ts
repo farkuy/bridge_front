@@ -5,9 +5,12 @@ interface AuthenticationStore {
 }
 
 export const $authStore = createStore<AuthenticationStore>({
-  accessToken: "",
+  accessToken: localStorage.getItem("accessToken") || "",
 });
 
 export const setAccessToken = createEvent<string>();
 
-$authStore.on(setAccessToken, (_, accessToken) => ({ ..._, accessToken }));
+$authStore.on(setAccessToken, (_, accessToken) => {
+  localStorage.setItem("accessToken", accessToken);
+  return { ..._, accessToken };
+});
