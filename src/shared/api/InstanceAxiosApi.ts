@@ -1,5 +1,5 @@
 import { Api } from "@/app/swagger/Api";
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import { $authStore, setAccessToken } from "@/entities/Authentication";
 
 export const ApiV1 = new Api();
@@ -27,16 +27,3 @@ ApiV1.instance.interceptors.response.use((response) => {
   }
   return response;
 });
-
-export function apiV1request<K extends keyof typeof ApiV1.api>(key: K) {
-  try {
-    return ApiV1.api[key];
-  } catch (error) {
-    if (isAxiosError(error)) {
-      console.error("Что-то пошло не так");
-    }
-
-    //Добавить обновление токена при его протухании и перевызов реквеста
-    throw error;
-  }
-}

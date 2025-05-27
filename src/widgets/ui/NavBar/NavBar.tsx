@@ -30,6 +30,7 @@ export const NavBar = () => {
     setAccessToken("");
   };
 
+  //TODO разделить их на компоненты по логике
   return (
     <Box
       component="header"

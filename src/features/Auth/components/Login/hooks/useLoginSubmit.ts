@@ -5,9 +5,9 @@ import { loginSchema } from "../schema/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUnit } from "effector-react";
 import { setAccessToken, setIsShowAuth } from "@/entities/Authentication";
-import { apiV1request } from "@/shared/api/InstanceAxiosApi";
 import { useState } from "react";
 import { setUser } from "@/entities/User/store/UserStore";
+import { apiRequest, apiV1request } from "@/shared/api/apiRequest";
 
 const QUERY_KEY = "authControllerLogin";
 
@@ -34,7 +34,9 @@ export const useLoginSubmit = () => {
     try {
       const {
         data: { accessToken, ...other },
-      } = await apiV1request(QUERY_KEY)(data);
+      } = await apiRequest({ request: apiV1request("authControllerLogin") })(
+        data,
+      );
 
       changeAccessToken(accessToken);
       setUserInfo(other);

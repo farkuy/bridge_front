@@ -1,9 +1,11 @@
 import { Button } from "@mantine/core";
-import { apiV1request } from "@/shared/api/InstanceAxiosApi";
+import { apiRequest, apiV1request } from "@/shared/api/apiRequest";
 
 export const MainePage = () => {
   const getAllUsers = async () => {
-    const users = await apiV1request("usersControllerGetAllUsers")();
+    const users = await apiRequest({
+      request: apiV1request("usersControllerGetAllUsers"),
+    });
     console.log(users);
   };
 

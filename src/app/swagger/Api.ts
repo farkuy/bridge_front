@@ -95,6 +95,8 @@ export interface Role {
   description: string;
 }
 
+export type TokenDto = object;
+
 export interface UserResponseDto {
   /**
    * Уникальный идентификатор пользователя
@@ -401,6 +403,21 @@ export class Api<
       this.request<Role, any>({
         path: `/api/roles/${value}`,
         method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Tokens
+     * @name TokensControllerRegistration
+     * @request POST:/api/tokens/update
+     */
+    tokensControllerRegistration: (params: RequestParams = {}) =>
+      this.request<TokenDto, any>({
+        path: `/api/tokens/update`,
+        method: "POST",
         format: "json",
         ...params,
       }),
