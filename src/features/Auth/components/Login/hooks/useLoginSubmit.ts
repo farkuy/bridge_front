@@ -7,7 +7,7 @@ import { useUnit } from "effector-react";
 import { setAccessToken, setIsShowAuth } from "@/entities/Authentication";
 import { useState } from "react";
 import { setUser } from "@/entities/User/store/UserStore";
-import { apiRequest, apiV1request } from "@/shared/api/apiRequest";
+import { publicRequest, apiV1Method } from "@/shared/api";
 
 const QUERY_KEY = "authControllerLogin";
 
@@ -34,9 +34,9 @@ export const useLoginSubmit = () => {
     try {
       const {
         data: { accessToken, ...other },
-      } = await apiRequest({ request: apiV1request("authControllerLogin") })(
-        data,
-      );
+      } = await publicRequest({
+        request: apiV1Method(QUERY_KEY),
+      })(data);
 
       changeAccessToken(accessToken);
       setUserInfo(other);

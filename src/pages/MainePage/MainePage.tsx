@@ -1,11 +1,11 @@
 import { Button } from "@mantine/core";
-import { apiRequest, apiV1request } from "@/shared/api/apiRequest";
+import { apiV1Method, privateRequest } from "@/shared/api";
 
 export const MainePage = () => {
   const getAllUsers = async () => {
-    const users = await apiRequest({
-      request: apiV1request("usersControllerGetAllUsers"),
-    });
+    const users = await privateRequest({
+      request: apiV1Method("usersControllerGetAllUsers"),
+    })({});
     console.log(users);
   };
 

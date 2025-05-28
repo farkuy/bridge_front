@@ -95,7 +95,15 @@ export interface Role {
   description: string;
 }
 
-export type TokenDto = object;
+export interface TokenDto {
+  /**
+   * токен пользователя
+   * @example "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+   *       .eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0
+   *       .KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30"
+   */
+  accessToken: string;
+}
 
 export interface UserResponseDto {
   /**
@@ -411,10 +419,10 @@ export class Api<
      * No description
      *
      * @tags Tokens
-     * @name TokensControllerRegistration
+     * @name TokensControllerUpdate
      * @request POST:/api/tokens/update
      */
-    tokensControllerRegistration: (params: RequestParams = {}) =>
+    tokensControllerUpdate: (params: RequestParams = {}) =>
       this.request<TokenDto, any>({
         path: `/api/tokens/update`,
         method: "POST",

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useUnit } from "effector-react";
 import type { RegistrationSchema } from "../schema/registration";
 import { registrationSchema } from "../schema/registration";
-import { apiV1request } from "@/shared/api/InstanceAxiosApi";
+import { apiV1Method, publicRequest } from "@/shared/api";
 import { useState } from "react";
 import { setAccessToken, setIsShowAuth } from "@/entities/Authentication";
 import { setUser } from "@/entities/User";
@@ -33,7 +33,7 @@ export const useRegistrationSubmit = () => {
     try {
       const {
         data: { accessToken, ...other },
-      } = await apiV1request(QUERY_KEY)(data);
+      } = await publicRequest({ request: apiV1Method(QUERY_KEY) })(data);
 
       changeAccessToken(accessToken);
       setUserInfo(other);
