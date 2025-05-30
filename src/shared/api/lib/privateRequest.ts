@@ -12,6 +12,7 @@ async function apiPrivateRequest<T, R>(
   } catch (error) {
     if (isAxiosError(error)) {
       const status = error.response?.status;
+
       if (status === 401) {
         const {
           data: { accessToken },

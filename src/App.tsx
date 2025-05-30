@@ -1,6 +1,6 @@
-import { MainePage } from "./pages";
 import { MantineProvider } from "@mantine/core";
-import { NavBar } from "@/widgets/ui/NavBar/NavBar";
+import { NavBar } from "@/widgets/ui";
+import { MainePage } from "@/pages";
 
 function App() {
   return (
