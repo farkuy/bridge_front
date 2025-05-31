@@ -1,23 +1,28 @@
 import { BrowserRouter, Route, Routes } from "react-router";
-import { routerConfig } from "@/app/router/config/routerConfig";
+import { routerConfig } from "./config/routerConfig";
 import { useUnit } from "effector-react";
 import { $user } from "@/entities/User";
+import { hasAccessPath } from "./utils/hasAccessPath";
+import { MainePage } from "@/pages";
 
-const AppRouter = () => {
+export const AppRouter = () => {
   const [user] = useUnit([$user]);
+
   return (
     <BrowserRouter>
       <Routes>
         {Object.entries(routerConfig).map(
           ([path, { role, element: Component }]) => {
             const component = <Component />;
-            const hasAccess ?
-              return <Route path={path} key={path} element={component} />;
+            const hasAccess = hasAccessPath(role, user?.roles);
+            return hasAccess ? (
+              <Route path={path} key={path} element={component} />
+            ) : (
+              <Route path={"*"} element={<MainePage />} />
+            );
           },
         )}
       </Routes>
     </BrowserRouter>
   );
 };
-
-export default AppRouter;

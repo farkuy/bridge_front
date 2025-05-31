@@ -1,10 +1,10 @@
 import type { JSX } from "react";
 
 export enum Paths {
-  MAIN = "main",
-  ADMIN_PAGE = "admin_page",
+  MAIN_PAGE = "/",
+  ADMIN_PAGE = "/admin",
 }
-type Role = "USER" | "ADMIN";
+export type Role = "USER" | "ADMIN";
 
 export type ElementAccess = {
   element: () => JSX.Element;
