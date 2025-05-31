@@ -12,7 +12,7 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         {Object.entries(routerConfig).map(
-          ([path, { role, element: Component }]) => {
+          ([path, { role, element: Component, isForAuth }]) => {
             const component = <Component />;
             const hasAccess = hasAccessPath(role, user?.roles);
             return hasAccess ? (
