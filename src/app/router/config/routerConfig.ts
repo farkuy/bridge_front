@@ -1,10 +1,17 @@
 import type { ElementAccess } from "../type/router.type";
 import { Paths } from "../type/router.type";
-import { AdminPage, AuthPage, MainePage } from "@/pages";
+import { AdminPage, AuthPage, MainePage, ProfilePage } from "@/pages";
 
 export const routerConfig: Record<Paths, ElementAccess> = {
-  //Пути, доступные обычным пользователям
-  [Paths.MAIN_PAGE]: { role: ["USER"], isForAuth: false, element: MainePage },
+  //Пути, доступные Всем
+  [Paths.MAIN_PAGE]: { role: [], isForAuth: false, element: MainePage },
+
+  //Пути, доступные зарегестрированным
+  [Paths.USER_PAGE]: {
+    role: ["USER", "ADMIN"],
+    isForAuth: true,
+    element: ProfilePage,
+  },
 
   //Пути, доступные только администраторам
   [Paths.ADMIN_PAGE]: { role: ["ADMIN"], isForAuth: true, element: AdminPage },
