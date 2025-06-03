@@ -8,6 +8,7 @@ import { apiV1Method, publicRequest } from "@/shared/api";
 import { useState } from "react";
 import { setAccessToken, setIsShowAuth } from "@/entities/Authentication";
 import { setUser } from "@/entities/User";
+import { isAxiosError } from "axios";
 
 const QUERY_KEY = "authControllerRegistration";
 
@@ -40,7 +41,12 @@ export const useRegistrationSubmit = () => {
 
       setVisibleAuth(false);
     } catch (error) {
-      throw error;
+      if (isAxiosError(error)) {
+        notifications.show({
+          title: "Default notification",
+          message: "Do not forget to star Mantine on GitHub! 🌟",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
