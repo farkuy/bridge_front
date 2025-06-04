@@ -1,10 +1,10 @@
 import { createEvent, createStore } from "effector";
 
-interface AuthenticationStore {
+interface IAuthenticationStore {
   accessToken: string;
 }
 
-export const $authStore = createStore<AuthenticationStore>({
+export const $authStore = createStore<IAuthenticationStore>({
   accessToken: localStorage.getItem("accessToken") || "",
 });
 

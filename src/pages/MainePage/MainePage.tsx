@@ -1,12 +1,13 @@
 import { Button } from "@mantine/core";
-import { apiV1Method, privateRequest } from "@/shared/api";
+import { useUnit } from "effector-react";
+import { addNotification } from "@/entities/Notification";
 
 function MainePage() {
+  const [setNot] = useUnit([addNotification]);
+
   const getAllUsers = async () => {
-    const users = await privateRequest({
-      request: apiV1Method("usersControllerGetAllUsers"),
-    })({});
-    console.log(users);
+    const id = String(Math.random());
+    setNot({ title: id, id });
   };
 
   return (
