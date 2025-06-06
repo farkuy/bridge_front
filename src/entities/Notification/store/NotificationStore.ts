@@ -1,13 +1,17 @@
 import { createEvent, createStore } from "effector";
 import type { INotification } from "../type/notification";
+import { uniqueId } from "@/shared/utils";
 
 export const $notifications = createStore<INotification[]>([]);
 export const addNotification = createEvent<INotification>();
 export const delNotificationId = createEvent<string>();
 
-addNotification.watch((notification) =>
-  setTimeout(() => delNotificationId(notification.id), 10 * 1000),
-);
+addNotification.watch((notification) => {
+  const { timer } = notification;
+  if (!notification.id) notification.id = uniqueId();
+  const id = notification.id;
+  if (timer) setTimeout(() => delNotificationId(id), timer);
+});
 
 $notifications
   .on(addNotification, (_, newNotification) => {
