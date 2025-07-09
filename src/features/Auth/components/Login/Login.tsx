@@ -10,13 +10,13 @@ export const Login = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
         {loginConfig.map(
-          ({ value, component: Component, label, placeholder }) => (
+          ({ value, component: InputComponent, label, placeholder }) => (
             <Input.Wrapper
               label={label}
               key={value}
               error={errors[value]?.message}
             >
-              <Component
+              <InputComponent
                 placeholder={placeholder}
                 type={value}
                 {...register(value)}

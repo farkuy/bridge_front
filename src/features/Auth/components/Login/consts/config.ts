@@ -1,11 +1,12 @@
 import type { ComponentType } from "react";
 import { Input, PasswordInput } from "@mantine/core";
+import type { InputProps, PasswordInputProps } from "@mantine/core";
 
 interface LoginInput {
   value: "email" | "password";
   label: string;
   placeholder: string;
-  component: ComponentType<any>;
+  component: ComponentType<InputProps> | ComponentType<PasswordInputProps>;
 }
 
 export const loginConfig: LoginInput[] = [

@@ -3,8 +3,8 @@ import { isAxiosError } from "axios";
 import { apiV1Method } from "./apiV1Method";
 import { setAccessToken } from "@/entities/Authentication";
 
-async function apiPrivateRequest<T, R>(
-  props: ApiRequestProps<T, R>,
+async function apiPrivateRequest<P, R>(
+  props: ApiRequestProps<P, R>,
 ): Promise<R> {
   const { request, params } = props;
   try {
@@ -26,10 +26,10 @@ async function apiPrivateRequest<T, R>(
   }
 }
 
-export function privateRequest<T, R>({
+export function privateRequest<P, R>({
   request,
-}: Omit<ApiRequestProps<T, R>, "params">) {
-  return function (params: T): Promise<R> {
+}: Omit<ApiRequestProps<P, R>, "params">) {
+  return function (params: P): Promise<R> {
     return apiPrivateRequest({ params, request });
   };
 }

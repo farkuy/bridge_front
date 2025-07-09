@@ -1,4 +1,4 @@
-export interface ApiRequestProps<T, R> {
-  request: (params: T) => Promise<R>;
-  params: T;
+export interface ApiRequestProps<P, R> {
+  request: (params: P) => Promise<R>;
+  params: P;
 }
